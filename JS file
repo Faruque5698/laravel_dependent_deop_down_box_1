@@ -1,0 +1,78 @@
+script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('change','.productCategory',function () {
+                // console.log('hmm its change')
+                var sub_cat=$('select[name="sub_cat_id"]')
+                var category_id=$(this).val();
+                // console.log(category_id);
+                var div=$(this).parent();
+
+                // var op=" ";
+
+                $.ajax({
+                   type:'get',
+                   url:'{!!URL::to('findsubcategory')!!}',
+                    data:{'id':category_id},
+                    success:function (data) {
+                        // console.log('success');
+                        //
+                        // console.log(data);
+                        // console.log(data.length);
+
+                        var op= `<option disabled="true" selected="true">---Select Sub category---</option>`;
+
+                        for (var i=0;i<data.length;i++) {
+                            op += '<option value="' + data[i].id + '">' + data[i].sub_cat_name + '</option>';
+
+                        }
+
+                        sub_cat.html(op);
+
+                    },
+                    error:function () {
+
+                    }
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('change','.subCategory',function () {
+                // console.log('hmm its change')
+                var sub_sub_cat=$('select[name="sub_sub_cat_id"]')
+                var subcategory_id=$(this).val();
+                console.log(subcategory_id);
+                {{--var div=$(this).parent();--}}
+
+                {{--// var op=" ";--}}
+
+                $.ajax({
+                    type:'get',
+                    url:'{!!URL::to('findsubsubcategory')!!}',
+                    data:{'id':subcategory_id},
+                    success:function (data) {
+                        console.log('success');
+                {{--        //--}}
+                        console.log(data);
+                        console.log(data.length);
+
+                        var op= `<option disabled="true" selected="true">---Select Sub Sub Category---</option>`;
+
+                        for (var i=0;i<data.length;i++) {
+                            op += '<option value="' + data[i].id + '">' + data[i].sub_sub_cat_name + '</option>';
+
+                        }
+
+                        sub_sub_cat.html(op);
+
+                    },
+                    error:function () {
+
+                    }
+                });
+            });
+        });
+    </script>
